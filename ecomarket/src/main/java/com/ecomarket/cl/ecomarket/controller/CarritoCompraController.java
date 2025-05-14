@@ -27,7 +27,7 @@ public class CarritoCompraController {
         return carritoCompraService.obtenerTodos();
     }
 
-    // 🔁 Obtener por RUT del cliente, porque así lo definiste en el service
+    // Obtener por el rut del
     @GetMapping("/{rut}")
     public Optional<CarritoCompra> obtener(@PathVariable String rut) {
         return carritoCompraService.obtenerPorId(rut);
@@ -40,7 +40,7 @@ public class CarritoCompraController {
 
     @PutMapping("/{rut}")
     public CarritoCompra actualizar(@PathVariable String rut, @RequestBody CarritoCompra carrito) {
-        // Asumimos que el carrito ya está asociado al cliente con ese RUT
+        
         return carritoCompraService.guardar(carrito);
     }
 
@@ -49,7 +49,7 @@ public class CarritoCompraController {
         carritoCompraService.eliminar(rut);
     }
 
-    // ✅ Agregar producto al carrito de un cliente usando su RUT
+    // agregar producto al carrito de un cliente usando el rut
     @PostMapping("/{clienteRut}/productos/{productoId}")
     public CarritoCompra agregarProducto(@PathVariable String clienteRut, @PathVariable Long productoId) {
         Optional<Producto> productoOpt = productoService.obtenerPorId(productoId);
@@ -58,6 +58,8 @@ public class CarritoCompraController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Producto no encontrado");
         }
 
-        return carritoCompraService.agregarProducto(clienteRut, productoOpt.get());
+        return carritoCompraService.agregarProducto(clienteRut, productoId);
     }
+
+    
 }

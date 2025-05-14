@@ -6,7 +6,7 @@ import java.util.Optional;
 
 public interface CarritoCompraRepository extends JpaRepository<CarritoCompra, Long> {
 
-    Optional<CarritoCompra> findByClienteRut(String rut);  // Método para buscar por rut del cliente
+    Optional<CarritoCompra> findByClienteRut(String rut);  
 
-    void deleteByClienteRut(String rut);  // Método para eliminar por rut del cliente
+    void deleteByClienteRut(String rut);  
 }

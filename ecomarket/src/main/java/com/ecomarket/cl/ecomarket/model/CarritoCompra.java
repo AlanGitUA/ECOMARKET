@@ -22,16 +22,16 @@ public class CarritoCompra {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
-    private boolean activo;
+    private double totalCarro;  
 
     public CarritoCompra() {}
 
     public CarritoCompra(Cliente cliente) {
         this.cliente = cliente;
-        this.activo = true;  // Un carrito recién creado está activo
+        this.totalCarro = 0.0;
     }
 
-    // Getters y Setters
+    
     public Long getId() {
         return id;
     }
@@ -46,6 +46,7 @@ public class CarritoCompra {
 
     public void setProductos(List<Producto> productos) {
         this.productos = productos;
+        calcularTotal(); 
     }
 
     public Cliente getCliente() {
@@ -56,11 +57,25 @@ public class CarritoCompra {
         this.cliente = cliente;
     }
 
-    public boolean isActivo() {
-        return activo;
+    public double getTotalCarro() {
+        return totalCarro;
     }
 
-    public void setActivo(boolean activo) {
-        this.activo = activo;
+    public void setTotalCarro(double totalCarro) {
+        this.totalCarro = totalCarro;
+    }
+
+    
+    private void calcularTotal() {
+        totalCarro = 0.0;
+        for (Producto producto : productos) {
+            totalCarro += producto.getPrecio();
+        }
+    }
+
+    
+    public void aplicarDescuento(double porcentajeDescuento) {
+        double descuento = totalCarro * (porcentajeDescuento / 100);
+        totalCarro -= descuento;
     }
 }

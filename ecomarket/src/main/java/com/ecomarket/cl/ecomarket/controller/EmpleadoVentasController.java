@@ -1,5 +1,6 @@
 package com.ecomarket.cl.ecomarket.controller;
 
+import com.ecomarket.cl.ecomarket.model.CuponDescuento;
 import com.ecomarket.cl.ecomarket.model.EmpleadoVentas;
 import com.ecomarket.cl.ecomarket.service.EmpleadoVentasService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,5 +39,15 @@ public class EmpleadoVentasController {
     @DeleteMapping("/{rut}")
     public void eliminar(@PathVariable String rut) {
         empleadoVentasService.eliminar(rut);
+    }
+
+    //pa crear cupones
+    @PostMapping("/{rut}/generar-cupon")
+    public CuponDescuento generarCupon(@PathVariable String rut, @RequestParam String codigo, @RequestParam double descuento) {
+        
+        
+
+        
+        return empleadoVentasService.generarCupon(codigo, descuento);
     }
 }

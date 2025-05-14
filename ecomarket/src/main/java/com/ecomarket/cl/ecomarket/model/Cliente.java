@@ -6,23 +6,26 @@ import jakarta.persistence.*;
 public class Cliente extends Usuario {
 
     private String direccionEnvio;
-    private boolean carritoActivo;
     private boolean cuponDescuentoAplicado;
 
     @OneToOne(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true)
     private CarritoCompra carrito;
 
-    public Cliente() {}
+    public Cliente() {
+        super();
+        this.carrito = new CarritoCompra(this);
+    }
 
     public Cliente(String rut, String nombre, String correo, String direccion, String telefono, 
                    String direccionEnvio, boolean carritoActivo, boolean cuponDescuentoAplicado) {
         super(rut, nombre, correo, direccion, telefono);
         this.direccionEnvio = direccionEnvio;
-        this.carritoActivo = carritoActivo;
         this.cuponDescuentoAplicado = cuponDescuentoAplicado;
+        this.carrito = new CarritoCompra(this);
+        
     }
 
-    // Getters and Setters
+    
 
     public String getDireccionEnvio() {
         return direccionEnvio;
@@ -32,13 +35,8 @@ public class Cliente extends Usuario {
         this.direccionEnvio = direccionEnvio;
     }
 
-    public boolean isCarritoActivo() {
-        return carritoActivo;
-    }
-
-    public void setCarritoActivo(boolean carritoActivo) {
-        this.carritoActivo = carritoActivo;
-    }
+    
+    
 
     public boolean isCuponDescuentoAplicado() {
         return cuponDescuentoAplicado;
@@ -56,7 +54,7 @@ public class Cliente extends Usuario {
         this.carrito = carrito;
     }
 
-    // Métodos adicionales
+
 
     public void getDetallesCliente() {
         System.out.println("Detalles del Cliente: " + getNombre() + ", " + getCorreo() + ", " + getTelefono() + ", Dirección: " + getDireccion());
@@ -68,27 +66,16 @@ public class Cliente extends Usuario {
     }
 
     public void verCarrito() {
-        if (carrito != null && carrito.isActivo()) {
-            System.out.println("El carrito está activo. Verificando los productos...");
-        } else {
-            System.out.println("No hay productos en el carrito.");
-        }
+        System.out.println("Mostrando productos en el carrito...");
     }
 
     public void agregarAlCarrito(String producto) {
-        if (carrito == null) {
-            carrito = new CarritoCompra(this);  // Crea un carrito nuevo si no existe
-        }
         System.out.println("Producto '" + producto + "' agregado al carrito.");
     }
 
     public void realizarPedido() {
-        if (carrito != null && carrito.isActivo()) {
-            System.out.println("Pedido realizado exitosamente.");
-            carrito.setActivo(false);  // Finaliza el carrito después de realizar el pedido
-        } else {
-            System.out.println("No hay productos en el carrito.");
-        }
+        System.out.println("Pedido realizado exitosamente.");
+        
     }
 
     public void verHistorialCompras() {
